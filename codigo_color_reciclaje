@@ -1,0 +1,40 @@
+import discord
+
+
+
+class MyClient(discord.Client):
+    async def on_ready(self):
+        print(f'Logged in as {self.user} (ID: {self.user.id})')
+        print('------')
+
+    async def on_message(self, message):
+        # we do not want the bot to reply to itself
+        if message.author.id == self.user.id:
+            return
+        if message.content.startswith("!hola"):
+            await message.reply('¡Hola!', mention_author=True)
+        if message.content.startswith("!funcion"):
+            await message.reply("Soy un bot que te dice el código de color en el reciclaje, si quieres saber, solo tienes que decir el color", mention_author=True)
+
+    async def on_message(self,message):
+        if message.author.id == self.user.id:
+            return
+        if message.content.startswith("!negro"):
+            await message.reply("El negro es para los residuos que no califican en las categorías aptas para reciclaje, igual cualquier cartón con grasa", mention_author=True)
+        if message.content.startswith("!gris"):
+            await message.reply("El gris es para los residuos que son papel y cartón, como los folders o papeles para dibujar", mention_author=True)
+        if message.content.startswith("!amarillo"):
+            await message.reply("El amarillo es para los residuos que contienen aluminio, a excepción del papel aluminio", mention_author=True)
+        if message.content.startswith("!verde"):
+            await message.reply("El color verde se utiliza para los residuos orgánicos, como las cáscaras de banano o de huevo", mention_author=True)
+        if message.content.startswith("!azul"):
+            await message.reply("El azul es para los residuos son envases como el tetrabrik y los plásticos", mention_author=True)
+        else:
+            await message.reply("Ese color no concuerda en mi base de datos")
+
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+client = MyClient(intents=intents)
+client.run('Insertar el Token')
